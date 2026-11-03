@@ -37,7 +37,7 @@ __global__ void leaky_relu_kernel(const float* input, float* output, int N)
     if (idx < N)
     {
         float val = input[idx];
-        if (output[idx] < 0)
+        if (val < 0)
         {
             val = val * alpha;
         }
