@@ -32,7 +32,11 @@ Constraints
 
 __global__ void invert_kernel(unsigned char* image, int width, int height) 
 {
-    
+    int tid = blockDim.x * blockIdx.x + threadIdx.x;
+    if (tid < width * height)
+    {    
+        reinterpret_cast<unsigned int*>(image)[tid] ^= 0x00FFFFFFu;
+    }
 }
 
 // image is a device pointer (i.e. pointer to memory on the GPU)
@@ -43,3 +47,44 @@ extern "C" void solve(unsigned char* image, int width, int height) {
     invert_kernel<<<blocksPerGrid, threadsPerBlock>>>(image, width, height);
     cudaDeviceSynchronize();
 }
+
+/*
+Optimized
+
+#include <cuda_runtime.h>
+#include <cstdint>
+
+__global__ void invert_kernel(unsigned char* __restrict__ image, int width, int height) 
+{
+    int tid = blockDim.x * blockIdx.x + threadIdx.x;
+    
+    if (tid < width * height / 4)
+    {
+        uint4* vec = reinterpret_cast<uint4*>(image);
+        uint4 p = vec[tid];
+        p.x ^= 0x00FFFFFFu;
+        p.y ^= 0x00FFFFFFu;
+        p.z ^= 0x00FFFFFFu;
+        p.w ^= 0x00FFFFFFu;
+        vec[tid] = p;
+    } 
+    else if (tid < (width * height)/4 + (width * height) - ((width * height / 4) * 4))
+    {
+        unsigned int* pixels = reinterpret_cast<unsigned int*>(image);
+        pixels[(width * height / 4) * 4 + (tid - (width * height / 4))] ^= 0x00FFFFFFu;
+    }
+}
+
+// image is a device pointer (i.e. pointer to memory on the GPU)
+extern "C" void solve(unsigned char* image, int width, int height) {
+    int numVec    = width * height / 4;
+    int remainder = width * height - ((width * height / 4) * 4);
+
+    int threadsPerBlock = 1024;
+    int threadsNeeded   = numVec + remainder;
+    int blocksPerGrid   = (threadsNeeded + threadsPerBlock - 1) / threadsPerBlock;
+
+    invert_kernel<<<blocksPerGrid, threadsPerBlock>>>(image, width, height);
+}
+
+*/
