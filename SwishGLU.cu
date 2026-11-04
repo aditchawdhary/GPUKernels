@@ -29,9 +29,23 @@ Performance is measured with N = 100,000
 
 */
 
-#include <cuda_runtime.h>
 
-__global__ void swiglu_kernel(const float* input, float* output, int halfN) {}
+#include <cuda_runtime.h>
+#include <math.h>
+
+__global__ void swiglu_kernel(const float* input, float* output, int halfN) 
+{
+    int idx = blockDim.x * blockIdx.x + threadIdx.x;
+    if (idx < halfN)
+    {
+        float x1 = input[idx];
+        float x2 = input[halfN + idx];
+
+        output[idx] =  (x1 / (1.0f + exp(-x1))) * x2;
+
+    }
+}
+
 
 // input, output are device pointers
 extern "C" void solve(const float* input, float* output, int N) {
