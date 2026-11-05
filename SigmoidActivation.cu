@@ -28,7 +28,15 @@ Constraints
 #include <cuda_runtime.h>
 #include <math.h>
 
-__global__ void sigmoid_kernel(const float* X, float* Y, int N) {}
+__global__ void sigmoid_kernel(const float* X, float* Y, int N) 
+{
+    int idx = blockDim.x * blockIdx.x + threadIdx.x;
+    if (idx < N)
+    {
+        float val = 1.0f / (1.0f + exp(-X[idx]));
+        Y[idx] = val;
+    }
+}
 
 // X, Y are device pointers (i.e. pointers to memory on the GPU)
 extern "C" void solve(const float* X, float* Y, int N) {
