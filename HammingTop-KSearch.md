@@ -46,3 +46,12 @@ Codes 0 and 3 tie at distance 2 at the cutoff, and only the one with the lower i
  - 1 ≤ `k` ≤ min(N, 1,024)
  - `codes` has 8 × `N` elements and `query` has 8 elements, all signed `32-bit integers`; all 32 bits count, including the sign bit
  - Performance is measured with `N` = 4,000,000, `k` = 128
+
+
+```
+#include <cuda_runtime.h>
+
+// codes, query, output are device pointers
+extern "C" void solve(const int* codes, const int* query, int* output, int N, int k) {}
+
+```
