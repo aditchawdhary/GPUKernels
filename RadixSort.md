@@ -27,3 +27,12 @@ The input parameter contains the unsorted array, and the sorted result should be
  - 1 ≤ `N` ≤ 100,000,000
  - 0 ≤ `input[i]` ≤ 4,294,967,295 (`32-bit` unsigned integers)
  - Performance is measured with `N = 50,000,000`
+
+## `solve.cu`
+```
+#include <cuda_runtime.h>
+
+// input, output are device pointers
+extern "C" void solve(const unsigned int* input, unsigned int* output, int N) {}
+
+```
