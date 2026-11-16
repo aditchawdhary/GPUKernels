@@ -17,3 +17,12 @@ The value at each output position `output[i][j]` is the sum of all input values 
  - Input values are in the range `[-100, 100]`
  - All values are `32-bit` floats
  - Performance is measured with `H = 8,192`, `W = 8,192`
+
+## `solve.cu`
+```
+#include <cuda_runtime.h>
+
+// input, output are device pointers
+extern "C" void solve(const float* input, float* output, int H, int W) {}
+
+```
