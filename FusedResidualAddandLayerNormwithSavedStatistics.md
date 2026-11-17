@@ -1,6 +1,6 @@
 ## Fused Residual Add and LayerNorm with Saved Statistics
 
-Implement the fused pre-norm residual block entry used in GPT-2, BERT, and most LayerNorm transformers: add the sublayer output x to the residual stream residual, apply Layer Normalization with learned gamma and beta, and in the same pass write out everything the next layer and the backward pass need. All inputs are float32; x and residual have shape (N, C) (one row per token), gamma and beta have shape (C,). You must produce four outputs: the normalized output y (N, C), the updated residual stream residual_out (N, C), and the per-row mean and reciprocal standard deviation rstd, each of shape (N,).
+Implement the fused pre-norm residual block entry used in GPT-2, BERT, and most LayerNorm transformers: add the sublayer output `x` to the `residual` stream residual, apply Layer Normalization with learned `gamma` and `beta`, and in the same pass write out everything the next layer and the backward pass need. All inputs are `float32`; `x` and residual have shape `(N, C)` (one row per token), `gamma` and `beta` have shape `(C,)`. You must produce four outputs: the normalized output `y` `(N, C)`, the updated residual stream `residual_out` `(N, C)`, and the per-row mean and reciprocal standard deviation `rstd`, each of shape `(N,)`.
 
 <img width="1012" height="328" alt="image" src="https://github.com/user-attachments/assets/0ad3b6cf-30cd-42a1-89ef-549540eec15e" />
 
