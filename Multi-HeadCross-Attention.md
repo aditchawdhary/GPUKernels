@@ -17,7 +17,7 @@ There is no causal mask — encoder positions are fully visible to every decoder
  - No causal mask is applied — every query attends to all `N` encoder positions.
 
 ## Example
-With `M = 2`, `N = 3`, `H = 2`, `D = 2`. Tensors are laid out as (position, head, dim). Per-head views:
+With `M = 2`, `N = 3`, `H = 2`, `D = 2`. Tensors are laid out as `(position, head, dim)`. Per-head views:
 
 <img width="1137" height="584" alt="image" src="https://github.com/user-attachments/assets/9955da85-fe7c-4eed-a6ce-5d5b563e99b6" />
 
