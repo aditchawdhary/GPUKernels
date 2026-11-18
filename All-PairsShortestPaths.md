@@ -43,3 +43,12 @@ Explanation:
  - The diagonal satisfies `dist[i * N + i] = 0` for all `i`
  - `dist` and `output` are flat arrays of `N × N` floats in row-major order
  - Performance is measured with `N = 2,048`
+
+## `solve.cu`
+```
+#include <cuda_runtime.h>
+
+// dist, output are device pointers (i.e. pointers to memory on the GPU)
+extern "C" void solve(const float* dist, float* output, int N) {}
+
+```
