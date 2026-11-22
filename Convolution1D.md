@@ -41,6 +41,7 @@ Output: [1.8, 3.2, 4.6]
 - `kernel_size` ≤ `input_size`
 - Performance is measured with `input_size` = `1,500,000`, `kernel_size` = `2,047`
 
+## `solve.cu`
 ```cuda
 #include <cuda_runtime.h>
 
