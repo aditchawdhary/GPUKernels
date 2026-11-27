@@ -36,3 +36,5 @@ int idx = blockDim.x * blockIdx.x + threadIdx.x;
 ```
 
 <img width="752" height="400" alt="image" src="https://github.com/user-attachments/assets/39854243-610c-471e-ab5b-6015629e16c6" />
+
+## Matrix Multiplication
